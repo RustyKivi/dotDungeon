@@ -83,17 +83,26 @@ public class NetworkTransmission : NetworkBehaviour
     }
     
     [ServerRpc(RequireOwnership = true)]
-    public void StartGameServerRPC(int[] _seed)
+    public void StartGameServerRPC()
     {
-        StartGameClientRPC(_seed);
+        StartGameClientRPC();
     }
 
     [ClientRpc]
-    private void StartGameClientRPC(int[] _seed)
+    private void StartGameClientRPC()
     {
-        GameConsole.instance.Output($"Seed: {_seed}");
-        GameManager.instance.currentSeed = _seed;
-        GameManager.instance.selectedDungeon.Load(_seed);
+
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void LoadDungeonServerRPC()
+    {
+        LoadDungeonClientRPC();
+    }
+
+    [ClientRpc]
+    private void LoadDungeonClientRPC()
+    {
+        GameManager.instance.selectedDungeon.Load();
+    }
 }

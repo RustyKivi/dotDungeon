@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerSpawner : NetworkBehaviour
 {
     [SerializeField] private GameObject Player;
-
+    private int loadedPlayers;
 
     private void Start() {
         DontDestroyOnLoad(this.gameObject);
@@ -23,6 +23,8 @@ public class PlayerSpawner : NetworkBehaviour
         
         if(IsHost && sceneName == "Gameplay")
         {
+            loadedPlayers++;
+            if(loadedPlayers != GameManager.instance.playerInfo.Count)return;
             foreach(ulong id in clientsCompleted)
             {
                 GameObject player = Instantiate(Player);
