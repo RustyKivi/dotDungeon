@@ -93,15 +93,15 @@ public class NetworkTransmission : NetworkBehaviour
     {
         GameConsole.instance.Output($"Seed: {_seed}");
         GameManager.instance.currentSeed = _seed;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
         //GameManager.instance.selectedDungeon.Load(_seed);
     }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
 
-        if (scene.name == "GamePlay")
+        if (sceneName == "GamePlay")
         {
-            Debug.Log("Scene loaded: " + scene.name);
+            Debug.Log("Scene loaded: " + sceneName);
             GameManager.instance.selectedDungeon.Load(GameManager.instance.currentSeed);
         }
     }
