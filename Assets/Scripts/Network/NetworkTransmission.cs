@@ -74,12 +74,14 @@ public class NetworkTransmission : NetworkBehaviour
     public void UpdateSelectedModeServerRPC(int _gamemode)
     {
         UpdateSelectedModeClientRPC(_gamemode);
+        Debug.Log("ServerRPC update" + _gamemode);
     }
 
     [ClientRpc]
     private void UpdateSelectedModeClientRPC(int _gamemode)
     {
         GameManager.instance.SwitchGameMode(_gamemode);
+        Debug.Log("ClientRPC update" + _gamemode);
     }
     
     [ServerRpc(RequireOwnership = true)]

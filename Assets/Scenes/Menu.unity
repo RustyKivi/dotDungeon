@@ -1352,8 +1352,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 0
   maxLoadedRooms: 4
-  spawnRoom: {fileID: 7644757917599233903, guid: 5be3a89bb59afdc46adc8a813342cfe4,
-    type: 3}
   roomPrefabs:
   - {fileID: 6481393865346687465, guid: 176d28df35e901643a81932ebfdb51a5, type: 3}
   - {fileID: 4640133800695896855, guid: a428a5e6bd3c3ac4f92875f4dfb4029d, type: 3}
@@ -3739,9 +3737,9 @@ MonoBehaviour:
     onCommandExecuted:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1662581514}
-          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: SwitchGameMode
+        - m_Target: {fileID: 1207352010}
+          m_TargetAssemblyTypeName: NetworkTransmission, Assembly-CSharp
+          m_MethodName: UpdateSelectedModeServerRPC
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3771,7 +3769,6 @@ MonoBehaviour:
   inGame: 0
   isHost: 0
   myClientId: 0
-  connectedPlayers: 0
   myLevel: 69
   myClass: Warrior
   myMagicLevel: 1
