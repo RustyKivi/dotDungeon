@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
 public class NetworkTransmission : NetworkBehaviour
 {
@@ -82,27 +83,26 @@ public class NetworkTransmission : NetworkBehaviour
     }
     
     [ServerRpc(RequireOwnership = true)]
-    public void StartGameServerRPC()
+    public void StartGameServerRPC(int[] _seed)
     {
-        StartGameClientRPC();
+        StartGameClientRPC(_seed);
     }
 
     [ClientRpc]
-    private void StartGameClientRPC()
+    private void StartGameClientRPC(int[] _seed)
     {
-        GameManager.instance.StartCurrentGameMode();
+        GameConsole.instance.Output($"Seed: {_seed}");
+        GameManager.instance.currentSeed = _seed;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        //GameManager.instance.selectedDungeon.Load(_seed);
     }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
 
-    [ServerRpc(RequireOwnership = true)]
-    public void LoadDungeonServerRPC(int [] _roomIds)
-    {
-        if(NetworkManager.Singleton.IsHost == false)return;
-        LoadDungeonClientRPC(_roomIds);
+        if (scene.name == "GamePlay")
+        {
+            Debug.Log("Scene loaded: " + scene.name);
+            GameManager.instance.selectedDungeon.Load(GameManager.instance.currentSeed);
+        }
     }
-    [ClientRpc]
-    private void LoadDungeonClientRPC(int [] _roomIds)
-    {
-        GameManager.instance.selectedDungeon.LoadRoomClient(_roomIds);
-    }
-
 }

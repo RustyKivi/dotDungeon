@@ -4360,9 +4360,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1207352010}
-        m_TargetAssemblyTypeName: NetworkTransmission, Assembly-CSharp
-        m_MethodName: StartGameServerRPC
+      - m_Target: {fileID: 1662581514}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StartCurrentGameMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -13,59 +13,21 @@ public class Dungeon : MonoBehaviour
     public GameObject spawnRoom;
     public GameObject[] roomPrefabs;
 
-    public virtual void Load()
+    public virtual void Load(int[] seed)
     {
         Debug.Log("Loading dungeon...");
-        if(NetworkManager.Singleton.IsHost)
-        {
-            LoadRoomHost(maxLoadedRooms);
-        }
+        LoadRoomClient(seed);
     }
-
-    private void LoadRoomHost(int amount)
+    private void LoadRoomClient(int[] _roomIndices)
     {
-        int[] spawnedRoomIndices = new int[amount];
-        if (amount <= 0)
-        {
-            Debug.Log("Loading complete.");
-            return;
-        }
-
         GameObject spawnedSpawnRoom = Instantiate(spawnRoom, transform.position, Quaternion.identity);
         Transform currentRoomHook = spawnedSpawnRoom.GetComponent<Room>().roomHook;
-
-        for (int i = 0; i < amount; i++)
-        {
-            GameObject randomRoomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Length)];
-            int prefabIndex = System.Array.IndexOf(roomPrefabs, randomRoomPrefab);
-
-            if (prefabIndex != -1)
-            {
-                spawnedRoomIndices[i] = prefabIndex;
-            }
-            else
-            {
-                Debug.LogError("Error: Spawned room prefab not found in roomPrefabs array.");
-            }
-
-            GameObject spawnedRoom = Instantiate(randomRoomPrefab, currentRoomHook.position, Quaternion.identity);
-            Transform spawnedRoomHook = spawnedRoom.GetComponent<Room>().roomHook;
-
-            currentRoomHook = spawnedRoomHook;
-        }
-        Debug.Log("Spawned Room Indices: " + string.Join(", ", spawnedRoomIndices));
-    }
-    public void LoadRoomClient(int[] _roomIndices)
-    {
-        if (GameManager.instance.isHost == true || _roomIndices == null || _roomIndices.Length == 0)
+        if (_roomIndices == null || _roomIndices.Length == 0)
         {
             return;
         }
         else
         {
-            GameObject spawnedSpawnRoom = Instantiate(spawnRoom, transform.position, Quaternion.identity);
-            Transform currentRoomHook = spawnedSpawnRoom.GetComponent<Room>().roomHook;
-
             foreach (int roomIndex in _roomIndices)
             {
                 if (roomIndex >= 0 && roomIndex < roomPrefabs.Length)

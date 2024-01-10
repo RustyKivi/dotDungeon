@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [Space]
     public Dungeon[] dungeonList;
     public Dungeon selectedDungeon;
+    public int[] currentSeed;
 
     public Dictionary<ulong, GameObject> playerInfo = new Dictionary<ulong, GameObject>();
     [Header("Networking")]
@@ -68,7 +69,29 @@ public class GameManager : MonoBehaviour
         if (selectedDungeon != null)
         {
             NetworkManager.Singleton.SceneManager.LoadScene("GamePlay", LoadSceneMode.Single);
+            MakeSeed();
         }
     }
+    public void MakeSeed()
+    {
+        if (selectedDungeon != null)
+        {
+            int amount = selectedDungeon.maxLoadedRooms;
 
+            if (amount <= 0)
+            {
+                Debug.LogError("Amount should be greater than zero.");
+                return;
+            }
+            int[] roomIndexes = new int[amount];
+            for (int i = 0; i < amount; i++)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, selectedDungeon.roomPrefabs.Length);
+
+                roomIndexes[i] = randomIndex;
+            }
+            Debug.Log("Random Room Indices: " + string.Join(", ", roomIndexes));
+            NetworkTransmission.instance.StartGameServerRPC(roomIndexes);
+        }
+    }
 }
