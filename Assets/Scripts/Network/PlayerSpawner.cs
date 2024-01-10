@@ -23,8 +23,6 @@ public class PlayerSpawner : NetworkBehaviour
         
         if(IsHost && sceneName == "Gameplay")
         {
-            loadedPlayers++;
-            if(loadedPlayers != GameManager.instance.playerInfo.Count)return;
             foreach(ulong id in clientsCompleted)
             {
                 GameObject player = Instantiate(Player);
