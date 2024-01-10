@@ -3707,6 +3707,7 @@ MonoBehaviour:
   dungeonList:
   - {fileID: 729449293}
   selectedDungeon: {fileID: 0}
+  currentSeed: 
   connected: 0
   inGame: 0
   isHost: 0

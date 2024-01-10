@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2677542638775061695}
   - component: {fileID: 985818508234968316}
   - component: {fileID: 3262463834044529457}
+  - component: {fileID: -1343981387710636953}
   m_Layer: 0
   m_Name: demoSpawnRoom
   m_TagString: Untagged
@@ -403,3 +404,15 @@ MonoBehaviour:
   spawners: []
   isOpen: 0
   isCompleted: 0
+--- !u!114 &-1343981387710636953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7644757917599233903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3d0487e64364742ac3debcbf073199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
