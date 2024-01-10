@@ -23,11 +23,14 @@ public class PlayerSpawner : NetworkBehaviour
         
         if(IsHost && sceneName == "Gameplay")
         {
+            GameManager.instance.selectedDungeon.Load();
             foreach(ulong id in clientsCompleted)
             {
                 GameObject player = Instantiate(Player);
                 player.GetComponent<NetworkObject>().SpawnAsPlayerObject(id,true);
             }
+        }else if(!IsHost && sceneName == "Gameplay"){
+            GameManager.instance.selectedDungeon.Load();
         }
     }
 }

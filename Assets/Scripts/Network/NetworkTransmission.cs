@@ -93,16 +93,4 @@ public class NetworkTransmission : NetworkBehaviour
     {
 
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void LoadDungeonServerRPC()
-    {
-        LoadDungeonClientRPC();
-    }
-
-    [ClientRpc]
-    private void LoadDungeonClientRPC()
-    {
-        GameManager.instance.selectedDungeon.Load();
-    }
 }

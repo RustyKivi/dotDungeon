@@ -10,11 +10,15 @@ public class Dungeon : MonoBehaviour
     [Space]
     [Range(1,10)]
     public int maxLoadedRooms;
-    public GameObject spawnRoom;
     public GameObject[] roomPrefabs;
 
     public virtual void Load()
     {
         Debug.Log("Loading dungeon...");
+        LoadDungeon();
+    }
+    private void LoadDungeon()
+    {
+        Debug.Log("Loading dungeon complete");
     }
 }
