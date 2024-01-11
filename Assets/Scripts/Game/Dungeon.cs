@@ -16,6 +16,7 @@ public class Dungeon : MonoBehaviour
     {
         Debug.Log("Loading dungeon...");
         LoadDungeon();
+        GameManager.instance.loadScreen.SetActive(false);
     }
     private void LoadDungeon()
     {

@@ -93,7 +93,7 @@ public class NetworkTransmission : NetworkBehaviour
     [ClientRpc]
     private void StartGameClientRPC()
     {
-
+        GameManager.instance.loadScreen.SetActive(true);
     }
     [ServerRpc(RequireOwnership = false)]
     public void UpdatePlayerServerRPC(ulong _steamId, string _role)

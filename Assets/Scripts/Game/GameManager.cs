@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public UnityEngine.UI.Slider client_health_slider;
     [Space]
     public TMP_Dropdown dropdown;
+    public GameObject loadScreen;
 
     private bool isGameActive = false;
     private int activeMinutes = 0;
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour
     {
         if (selectedDungeon != null)
         {
+            NetworkTransmission.instance.StartGameServerRPC();
             NetworkManager.Singleton.SceneManager.LoadScene("GamePlay", LoadSceneMode.Single);
         }
     }

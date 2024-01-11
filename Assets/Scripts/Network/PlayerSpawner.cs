@@ -30,7 +30,6 @@ public class PlayerSpawner : NetworkBehaviour
                 player.GetComponent<NetworkObject>().SpawnAsPlayerObject(id,true);
             }
         }else if(!IsHost && sceneName == "Gameplay"){
-            Debug.Log("Client!");
             GameManager.instance.selectedDungeon.Load();
         }
     }
