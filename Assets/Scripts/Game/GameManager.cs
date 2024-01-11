@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using Netcode.Transports.Facepunch;
+using Steamworks;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +17,7 @@ public class GameManager : MonoBehaviour
     public Dungeon[] dungeonList;
     public Dungeon selectedDungeon;
     public int[] currentSeed;
+    public string[] roleOptions;
 
     public Dictionary<ulong, GameObject> playerInfo = new Dictionary<ulong, GameObject>();
     [Header("Networking")]
@@ -29,13 +33,22 @@ public class GameManager : MonoBehaviour
     public int myMagicLevel = 1;
     public int myPhysicLevel = 1;
     public int myDefendLevel = 1;
-    
+
+    [Header("GUI")]
+    public TMP_Text client_name_text;
+    public TMP_Text client_level_text;
+    public TMP_Text client_health_text;
+    public UnityEngine.UI.Slider client_health_slider;
+    [Space]
+    public TMP_Dropdown dropdown;
 
     private bool isGameActive = false;
     private int activeMinutes = 0;
 
     private void Awake()
     {
+        dropdown.AddOptions(new List<string>(roleOptions));
+        dropdown.value = Array.IndexOf(roleOptions, myClass);
         if (instance == null)
         {
             instance = this;
@@ -45,6 +58,12 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Duplicate instance of GameConsole. Destroying the new one.");
             Destroy(gameObject);
         }
+    }
+    private void Start() {
+        dropdown.onValueChanged.AddListener(delegate {
+            ChangeClass(dropdown);
+        });
+        UpdateClientGUI();
     }
 
     private void Update()
@@ -69,6 +88,22 @@ public class GameManager : MonoBehaviour
         if (selectedDungeon != null)
         {
             NetworkManager.Singleton.SceneManager.LoadScene("GamePlay", LoadSceneMode.Single);
+        }
+    }
+    public void UpdateClientGUI()
+    {
+        client_name_text.text = SteamClient.Name;
+        client_level_text.text = "Level: " + myLevel.ToString();
+        client_health_text.text = "100/100";
+        client_health_slider.maxValue = 100;
+        client_health_slider.value = 100;
+    }
+    public void ChangeClass(TMP_Dropdown change)
+    {
+        myClass = roleOptions[change.value];
+        if(connected == true)
+        {
+            NetworkTransmission.instance.UpdatePlayerServerRPC(SteamClient.SteamId,myClass);
         }
     }
 }

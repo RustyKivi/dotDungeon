@@ -37,6 +37,7 @@ public class LobbyManager : MonoBehaviour
         multiLobby.SetActive(true);
         GameManager.instance.isHost = true;
         GameManager.instance.connected = true;
+        //GameManager.instance.dropdown.gameObject.SetActive(false);
     }
 
     public void ConnectedAsClient()
@@ -45,6 +46,7 @@ public class LobbyManager : MonoBehaviour
         multiLobby.SetActive(true);
         GameManager.instance.isHost = false;
         GameManager.instance.connected = true;
+        //GameManager.instance.dropdown.gameObject.SetActive(false);
     }
 
     public void Disconnected()
@@ -60,6 +62,7 @@ public class LobbyManager : MonoBehaviour
         multiLobby.SetActive(false);
         GameManager.instance.isHost = false;
         GameManager.instance.connected = false;
+        GameManager.instance.dropdown.gameObject.SetActive(true);
     }
 
     public void AddPlayerToDictionary(ulong _cliendId, string _steamName, ulong _steamId, string _class, int _plrLevel, int _phyLevel,int _mgcLevel, int _defLevel)

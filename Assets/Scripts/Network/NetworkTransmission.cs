@@ -95,4 +95,25 @@ public class NetworkTransmission : NetworkBehaviour
     {
 
     }
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdatePlayerServerRPC(ulong _steamId, string _role)
+    {
+        UpdatePlayerClientRPC(_steamId,_role);
+    }
+
+    [ClientRpc]
+    private void UpdatePlayerClientRPC(ulong _steamId, string _role)
+    {
+        foreach(KeyValuePair<ulong,GameObject> _player in GameManager.instance.playerInfo)
+        {
+            if(_player.Value.GetComponent<PlayerInfo>().steamId == _steamId)
+            {
+                PlayerInfo playerData = _player.Value.GetComponent<PlayerInfo>();
+                playerData.role = _role;
+
+                // GUI update
+                playerData.UpdateGUI();
+            }
+        }
+    }
 }

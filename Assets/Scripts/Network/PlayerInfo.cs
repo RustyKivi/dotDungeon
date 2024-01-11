@@ -47,4 +47,10 @@ public class PlayerInfo : MonoBehaviour
         playerClass.text = role;
         playerLevel.text = "( " + level.ToString() + " )";
     }
+    public void UpdateGUI()
+    {
+        playerName.text = steamName;
+        playerClass.text = role;
+        playerLevel.text = "( " + level.ToString() + " )";
+    }
 }
