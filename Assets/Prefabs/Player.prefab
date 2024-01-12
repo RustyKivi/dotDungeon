@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1079482949
+  GlobalObjectIdHash: 1443107649
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -97,9 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  speedGround: 12
-  speedAir: 12
-  jumpHeight: 3
+  speedGround: 6
+  speedAir: 6
+  jumpHeight: 1
   groundCheck: {fileID: 8394073307091178413}
   groundDistance: 0.1
   groundMask:
