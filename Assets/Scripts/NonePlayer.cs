@@ -12,6 +12,8 @@ public class NonePlayer : MonoBehaviour
     [Header("GUI")]
     public TMP_Text Nametag;
     public Slider HealthBar;
+    [Space]
+    public Transform Target;
 
     private NavMeshAgent agent;
 
@@ -19,6 +21,10 @@ public class NonePlayer : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         if(Nametag != null){Nametag.text = this.name;}
         if(HealthBar != null){HealthBar.maxValue = Health; HealthBar.value = Health;}
+        agent.speed = WalkSpeed;
+    }
+    private void Update() {
+        agent.destination = Target.position;
     }
 
     public virtual void Attack()
