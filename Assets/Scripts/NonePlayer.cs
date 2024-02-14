@@ -9,6 +9,7 @@ public class NonePlayer : MonoBehaviour
 {
     public int Health;
     public float WalkSpeed;
+    public int AttackDamage;
     [Header("GUI")]
     public TMP_Text Nametag;
     public Slider HealthBar;
