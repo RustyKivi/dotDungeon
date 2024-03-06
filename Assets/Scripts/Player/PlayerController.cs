@@ -4,52 +4,78 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float sprintSpeed = 8f;
-    public float staminaMax = 100f;
-    public float sprintCost = 10f;
-    public float staminaRegenRate = 20f;
+    public float walkingSpeed = 7.5f;
+    public float airControlMultiplier = 0.5f;
+    public float jumpSpeed = 8.0f;
+    public float gravity = 20.0f;
+    [Space]
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+    [Space]
+    public Transform raycastOrigin;
+    public float raycastDistance = 5f;
 
-    private float currentStamina;
-    private bool isSprinting = false;
-    private CharacterController controller;
-    private Vector3 moveDirection;
+    private CharacterController characterController;
+    private Vector3 moveDirection = Vector3.zero;
+    private bool isGrounded;
 
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
-        currentStamina = staminaMax;
+        characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
-        moveDirection = move.normalized;
-
-        if (Input.GetKey(KeyCode.LeftShift) && currentStamina >= sprintCost)
+        if(Input.GetKeyDown(KeyCode.E)){Attack();}
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        
+        Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        inputDirection = transform.TransformDirection(inputDirection);
+        
+        if (isGrounded && moveDirection.y < 0)
         {
-            isSprinting = true;
-            currentStamina -= sprintCost * Time.deltaTime;
+            moveDirection.y = -2f;
+        }
+        
+        if (isGrounded)
+        {
+            moveDirection = inputDirection * walkingSpeed;
+            if (Input.GetButton("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+            }
         }
         else
         {
-            isSprinting = false;
+            moveDirection = new Vector3(inputDirection.x * walkingSpeed * airControlMultiplier, moveDirection.y, inputDirection.z * walkingSpeed * airControlMultiplier);
         }
-
-        float speed = isSprinting ? sprintSpeed : moveSpeed;
-        controller.Move(moveDirection * speed * Time.deltaTime);
-
-        if (!isSprinting && currentStamina < staminaMax)
-        {
-            currentStamina += staminaRegenRate * Time.deltaTime;
-            currentStamina = Mathf.Clamp(currentStamina, 0f, staminaMax);
-        }
+        
+        moveDirection.y -= gravity * Time.deltaTime;
+        characterController.Move(moveDirection * Time.deltaTime);
     }
 
-    private void OnGUI()
+    private void OnDrawGizmosSelected()
     {
-        GUI.Label(new Rect(10, 10, 150, 20), "Stamina: " + Mathf.Round(currentStamina));
+        if (groundCheck == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
+    }
+
+    public void Attack()
+    {
+        Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, raycastDistance))
+        {
+            
+            Debug.Log(hit.collider.name);
+            NonePlayer nonPlayerScript = hit.collider.GetComponent<NonePlayer>();
+            if (nonPlayerScript != null)
+            {
+                nonPlayerScript.Damage(10);
+            }
+        }
     }
 }

@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 1476286156036571376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6460255124656429192}
@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 6460255124656429192}
   - component: {fileID: 7597049542635361974}
   - component: {fileID: 281699678866168816}
+  - component: {fileID: 8146528866773582965}
   m_Layer: 0
   m_Name: NonePlayerObject
   m_TagString: NonePlayer
@@ -487,6 +488,7 @@ MonoBehaviour:
   Nametag: {fileID: 2910758507228300597}
   HealthBar: {fileID: 1480278821157201112}
   Target: {fileID: 0}
+  room: {fileID: 0}
 --- !u!195 &281699678866168816
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -509,6 +511,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &8146528866773582965
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977009744339792607}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5367727786661890197
 GameObject:
   m_ObjectHideFlags: 0

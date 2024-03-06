@@ -15,6 +15,7 @@ public class NonePlayer : MonoBehaviour
     public Slider HealthBar;
     [Space]
     public Transform Target;
+    public Room room;
 
     private NavMeshAgent agent;
 
@@ -23,8 +24,10 @@ public class NonePlayer : MonoBehaviour
         if(Nametag != null){Nametag.text = this.name;}
         if(HealthBar != null){HealthBar.maxValue = Health; HealthBar.value = Health;}
         agent.speed = WalkSpeed;
+        Target = GameObject.FindWithTag("Player").transform;
     }
     private void Update() {
+        if(Target == null)return;
         agent.destination = Target.position;
     }
 
@@ -32,15 +35,24 @@ public class NonePlayer : MonoBehaviour
     {
 
     }
-    public void Damage(int amout)
+    public void Damage(int amount)
     {
-        if(amout >= Health)
+        if (amount >= Health)
         {
-            Destroy(gameObject);
-        }else{
-            Health -= amout;
-            if(HealthBar != null)return;
-            HealthBar.value -= amout;
+            if (room != null)
+            {
+                room.activeNonPlayers--;
+                DungeonManager.instance.RoomCompleted(room);
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Health -= amount;
+            if (HealthBar != null)
+            {
+                HealthBar.value -= amount;
+            }
         }
     }
 }
