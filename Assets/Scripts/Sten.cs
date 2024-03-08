@@ -6,11 +6,20 @@ public class Sten : MonoBehaviour
 {
     public GameObject StartButton;
     private GameObject playerObject;
+    private bool isInside;
 
     private void Start()
     {
         ChatManager.instance.chatPanel.SetActive(false);
         ChatManager.instance.chatInput.gameObject.SetActive(false);
+        isInside = false;
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.E) && isInside == true)
+        {
+            StartLobby();
+        }
     }
 
     public void StartLobby(){
@@ -27,6 +36,7 @@ public class Sten : MonoBehaviour
         {
             playerObject = other.gameObject;
             StartButton.SetActive(true);
+            isInside = true;
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -34,6 +44,7 @@ public class Sten : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             StartButton.SetActive(false);
+            isInside = false;
         }
     }
 }

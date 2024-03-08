@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         remainingJumps = extraJumps;
+        CameraController.instance.target = this.gameObject.transform;
     }
 
     private void Update()
