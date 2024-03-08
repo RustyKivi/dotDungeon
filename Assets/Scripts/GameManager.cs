@@ -52,8 +52,8 @@ public class GameManager : MonoBehaviour
 
     public void HostCreated()
     {
-        multiMenu.SetActive(false);
-        multiLobby.SetActive(true);
+        //multiMenu.SetActive(false);
+        //multiLobby.SetActive(true);
         isHost = true;
         connected = true;
         hostObject.SetActive(false);
@@ -61,8 +61,8 @@ public class GameManager : MonoBehaviour
 
     public void ConnectedAsClient()
     {
-        multiMenu.SetActive(false);
-        multiLobby.SetActive(true);
+        //multiMenu.SetActive(false);
+        //multiLobby.SetActive(true);
         isHost = false;
         connected = true;
         hostObject.SetActive(false);
@@ -158,5 +158,16 @@ public class GameManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            playerFieldBox.SetActive(true);
+        }
+        if(Input.GetKeyUp(KeyCode.Tab))
+        {
+            playerFieldBox.SetActive(false);
+        }
     }
 }
