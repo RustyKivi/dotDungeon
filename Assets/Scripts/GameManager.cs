@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         isHost = false;
         connected = true;
         hostObject.SetActive(false);
+        Destroy(myObject);
     }
 
     public void Disconnected()
