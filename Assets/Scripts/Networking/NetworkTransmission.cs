@@ -98,6 +98,7 @@ public class NetworkTransmission : NetworkBehaviour
     public void StartGameServerRPC()
     {
         StartGameClientRPC();
+        ChunkLoader.instance.AskForLoad();
     }
 
     [ClientRpc]
@@ -105,7 +106,5 @@ public class NetworkTransmission : NetworkBehaviour
     {
         GameManager.instance.playerCamera.camInit(true);
         GameManager.instance.lobbyDoor.SetActive(false);
-        if(GameManager.instance.isHost == false)return;
-        ChunkLoader.instance.AskForLoad();
     }
 }
