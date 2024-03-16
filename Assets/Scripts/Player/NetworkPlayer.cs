@@ -5,6 +5,9 @@ using Unity.Netcode;
 
 public class NetworkPlayer : NetworkBehaviour
 {
+    [Header("My Value's")]
+    public int Health = 100;
+    [Header("Character Value's")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public int extraJumps = 1;
@@ -47,6 +50,13 @@ public class NetworkPlayer : NetworkBehaviour
 
         float horizontalInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+
+        if (horizontalInput != 0f)
+        {
+            Vector3 currentScale = transform.localScale;
+            currentScale.x = Mathf.Sign(horizontalInput) * Mathf.Abs(currentScale.x);
+            transform.localScale = currentScale;
+        }
 
         if (isGrounded)
         {
@@ -109,6 +119,29 @@ public class NetworkPlayer : NetworkBehaviour
         }else if (currentItem == 2)
         {
             item2.Trigger();
+        }
+    }
+
+    public void Damage(int dmg)
+    {
+        if(Health >= 0)
+        {
+            Health -= dmg;
+            if(Health <= 0)
+            {
+                Health = 0;
+            }
+        }
+    }
+    public void Heal(int h)
+    {
+        if(Health >= 0)
+        {
+            Debug.Log("Current NetworkPlayer is already dead");
+            return;
+        }else{
+            Health += h;
+            if(Health >= 100){Health = 100;}
         }
     }
 }

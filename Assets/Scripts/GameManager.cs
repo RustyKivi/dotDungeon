@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     public CameraController playerCamera;
     public GameObject myObject;
 
+    private bool isClientReady = false;
+
     private void Awake()
     {
         if (instance != null)
@@ -38,11 +41,13 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
     }
-    
 
     public void StartGame()
     {
-        playerCamera.camInit(true);
+        Debug.Log("The game is starting...");
+        startButton.GetComponent<Button>().enabled = false;
+        startButton.SetActive(false);
+        NetworkTransmission.instance.StartGameServerRPC();
     }
 
     public void Init()
@@ -169,6 +174,12 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Tab))
         {
             playerFieldBox.SetActive(false);
+        }
+
+         if(Input.GetKeyDown(KeyCode.R) && connected == true)
+        {
+            isClientReady = !isClientReady;
+            ReadyButton(isClientReady);
         }
     }
 }

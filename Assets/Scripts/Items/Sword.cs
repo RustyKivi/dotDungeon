@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class Sword : PlayerItem
 {
-    // Start is called before the first frame update
-    void Start()
+    public Animator ani;
+    [SerializeField] private float cooldownTime = 5f;
+    private bool isUsed;
+    public override void Trigger()
     {
-        
+        base.Trigger();
+        if (!isUsed)
+        {
+            ani.SetTrigger("wp_swing");
+            StartCoroutine(StartCooldown());
+        }
     }
+    
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator StartCooldown()
     {
-        
+        isUsed = true;
+        yield return new WaitForSeconds(cooldownTime);
+        isUsed = false;
     }
 }

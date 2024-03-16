@@ -4,9 +4,10 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
     public Transform target;
-    public float smoothSpeed = 0.125f;
+    public float smoothTime = 0.3f;
     public float minXPosition = 0f;
     private bool follow = false;
+    private Vector3 velocity = Vector3.zero;
 
     private void Awake()
     {
@@ -22,25 +23,19 @@ public class CameraController : MonoBehaviour
 
     public void camInit(bool _init)
     {
-        if(_init == true){
-            follow = true;
-        }else{
-            follow = false;
-            transform.position = new Vector3(0,0,-10);
+        follow = _init;
+        if (!follow)
+        {
+            transform.position = new Vector3(0, 0, -10);
         }
     }
 
     void LateUpdate()
     {
-        if (follow == true)
-        {
-            if(target == null)return;
-            if(target.position.x < minXPosition)return;
-        }else return;
+        if (!follow || target == null || target.position.x < minXPosition)
+            return;
 
-
-        Vector3 desiredPosition = new Vector3(target.position.x,0,-10);
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothedPosition;
+        Vector3 targetPosition = new Vector3(target.position.x, 0, -10);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 }

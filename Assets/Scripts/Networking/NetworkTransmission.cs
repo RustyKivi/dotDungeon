@@ -80,4 +80,31 @@ public class NetworkTransmission : NetworkBehaviour
             }
         }
     }
+
+    [ServerRpc]
+    public void AskToLoadChunkServerRPC(int chunkid)
+    {
+        LoadChunkClientRPC(chunkid);
+    }
+
+    [ClientRpc]
+    private void LoadChunkClientRPC(int chunkid)
+    {
+        ChunkLoader.instance.LoadChunk(chunkid);
+        Debug.Log("Server approved of the load of the chunk..");
+    }
+
+    [ServerRpc]
+    public void StartGameServerRPC()
+    {
+        StartGameClientRPC();
+    }
+
+    [ClientRpc]
+    private void StartGameClientRPC()
+    {
+        ChunkLoader.instance.AskForLoad();
+        GameManager.instance.playerCamera.camInit(true);
+        GameManager.instance.lobbyDoor.SetActive(false);
+    }
 }

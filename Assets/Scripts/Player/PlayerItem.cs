@@ -7,7 +7,7 @@ public class PlayerItem : MonoBehaviour
     public string Name;
     public int Damage;
     [Space]
-    public Type None;
+    public Type ItemType = Type.None;
     public GameObject worldObject;
 
     private bool equipt = false;
