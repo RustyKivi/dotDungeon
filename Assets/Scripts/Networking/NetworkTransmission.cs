@@ -103,8 +103,9 @@ public class NetworkTransmission : NetworkBehaviour
     [ClientRpc]
     private void StartGameClientRPC()
     {
-        ChunkLoader.instance.AskForLoad();
         GameManager.instance.playerCamera.camInit(true);
         GameManager.instance.lobbyDoor.SetActive(false);
+        if(GameManager.instance.isHost == false)return;
+        ChunkLoader.instance.AskForLoad();
     }
 }
