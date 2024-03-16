@@ -134,7 +134,7 @@ MonoBehaviour:
   Damage: 0
   ItemType: 0
   worldObject: {fileID: 6194203005291082826}
-  ani: {fileID: 0}
+  ani: {fileID: 6984532593823373387}
   cooldownTime: 5
 --- !u!95 &6984532593823373387
 Animator:

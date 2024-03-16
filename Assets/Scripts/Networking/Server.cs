@@ -127,7 +127,7 @@ public class Server : MonoBehaviour
         _lobby.SetJoinable(true);
         _lobby.SetGameServer(_lobby.Owner.Id);
         Debug.Log($"lobby created FakeSteamName");
-        NetworkTransmission.instance.AddMeToDictionaryServerRPC(SteamClient.SteamId, "FakeSteamName", NetworkManager.Singleton.LocalClientId); //
+        NetworkTransmission.instance.AddMeToDictionaryServerRPC(SteamClient.SteamId, SteamClient.Name, NetworkManager.Singleton.LocalClientId); //
     }
 
     public async void StartHost(int _maxMembers)
@@ -144,6 +144,7 @@ public class Server : MonoBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
         transport.targetSteamId = _sId;
         GameManager.instance.myClientId = NetworkManager.Singleton.LocalClientId;
+        Destroy(GameManager.instance.myObject);
         if (NetworkManager.Singleton.StartClient())
         {
             Debug.Log("Client has started");

@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
             playerFieldBox.SetActive(false);
         }
 
-         if(Input.GetKeyDown(KeyCode.R) && connected == true)
+        if(Input.GetKeyDown(KeyCode.R) && connected == true)
         {
             isClientReady = !isClientReady;
             ReadyButton(isClientReady);
