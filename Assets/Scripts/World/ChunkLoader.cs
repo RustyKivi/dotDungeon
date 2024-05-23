@@ -30,7 +30,8 @@ public class ChunkLoader : MonoBehaviour
         }
 
         int randomIndex = Random.Range(0, ChunkPrefabs.Count);
-        LoadChunk(randomIndex);
+        NetworkTransmission.instance.AskToLoadChunkServerRPC(randomIndex);
+        //LoadChunk(randomIndex);
     }
 
     public void LoadChunk(int chunkId)
