@@ -81,7 +81,7 @@ public class NetworkTransmission : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void AskToLoadChunkServerRPC(int chunkid)
     {
         LoadChunkClientRPC(chunkid);
