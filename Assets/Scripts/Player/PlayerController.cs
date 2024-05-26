@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         CameraController.instance.target = this.gameObject.transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(transform.position, 0.2f, LayerMask.GetMask("Ground"));
 
